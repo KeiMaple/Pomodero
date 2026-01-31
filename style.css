@@ -1,0 +1,256 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+.app-wrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('nap-time-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-color: #f8f0e8; /* warm fallback */
+  position: relative;
+}
+
+/* Toggle button (top-right) */
+.toggle-timer-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  background: rgba(255, 245, 235, 0.38);
+  backdrop-filter: blur(10px);
+  border: none;
+  color: #fffaf0;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.7rem 1.4rem;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  transition: all 0.28s ease;
+}
+
+.toggle-timer-btn:hover {
+  background: rgba(255, 245, 235, 0.55);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+}
+
+/* Main timer container */
+.timer-container {
+  background: rgba(255, 245, 235, 0.22);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 3.4rem 4.4rem;
+  box-shadow: 
+    0 12px 40px rgba(0,0,0,0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  max-width: 540px;
+  width: 90vw;
+  min-width: 280px;
+  max-height: 90vh;
+  overflow-y: auto;
+  text-align: center;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.timer-container.hidden {
+  opacity: 0;
+  transform: scale(0.92);
+  pointer-events: none;
+  visibility: hidden;
+}
+
+/* Text styles */
+h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 0.7rem;
+  color: #fff8f2;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.5),
+               0 0 16px rgba(255, 220, 180, 0.4);
+  letter-spacing: -0.5px;
+}
+
+.mode {
+  font-size: 1.35rem;
+  font-weight: 400;
+  margin-bottom: 0.9rem;
+  color: #ffe8d9;
+  opacity: 0.94;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.45);
+}
+
+.timer {
+  font-size: 6.8rem;
+  font-weight: bold;
+  letter-spacing: 6px;
+  margin: 0.6rem 0 1.3rem;
+  font-family: 'Courier New', Courier, monospace;
+  color: #ffdfc9;
+  text-shadow: 
+    0 4px 18px rgba(0,0,0,0.65),
+    0 0 24px rgba(255, 190, 140, 0.45),
+    0 0 40px rgba(255, 180, 130, 0.25);
+}
+
+.progress {
+  font-size: 1.18rem;
+  margin: 1.6rem 0 2.4rem;
+  color: #ffe3d1;
+  opacity: 0.9;
+  text-shadow: 0 1px 7px rgba(0,0,0,0.4);
+}
+
+/* Buttons */
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 1.4rem;
+  flex-wrap: wrap;
+}
+
+.controls button {
+  font-size: 1.08rem;
+  font-weight: 500;
+  padding: 0.85rem 2.2rem;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.28s ease;
+  color: #fffaf5;
+  box-shadow: 0 5px 18px rgba(0,0,0,0.22);
+  min-height: 48px; /* good touch target */
+}
+
+#start { background: linear-gradient(145deg, #c19a70, #a67c52); }
+#pause  { background: linear-gradient(145deg, #d9b38c, #c19a70); }
+#reset  { background: linear-gradient(145deg, #b08a7a, #9a6f5f); }
+
+button:hover {
+  transform: translateY(-4px) scale(1.04);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.28);
+}
+
+button:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+/* Floating mini timer */
+.floating-timer {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(255, 245, 235, 0.45);
+  backdrop-filter: blur(10px);
+  color: #fffaf0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 0.6rem 1.2rem;
+  border-radius: 50px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.22);
+  z-index: 999;
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  transition: all 0.35s ease;
+  cursor: pointer;
+  user-select: none;
+}
+
+.floating-timer.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+#floatingTime {
+  text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+}
+
+/* ──────────────────────────────────────────────
+   RESPONSIVE DESIGN
+────────────────────────────────────────────── */
+
+@media (max-width: 600px) {
+  .timer-container {
+    padding: 2.2rem 2.5rem;
+    max-width: 92vw;
+    border-radius: 24px;
+  }
+
+  h1 {
+    font-size: 2.1rem;
+  }
+
+  .timer {
+    font-size: 5.4rem;
+    letter-spacing: 5px;
+    margin: 0.4rem 0 1rem;
+  }
+
+  .mode {
+    font-size: 1.2rem;
+  }
+
+  .progress {
+    font-size: 1rem;
+    margin: 1.2rem 0 1.8rem;
+  }
+
+  .controls {
+    gap: 1rem;
+    flex-direction: column;
+  }
+
+  .controls button {
+    width: 100%;
+    padding: 0.9rem;
+    font-size: 1.05rem;
+  }
+
+  .toggle-timer-btn {
+    top: 16px;
+    right: 16px;
+    padding: 0.8rem 1.3rem;
+    font-size: 0.95rem;
+  }
+
+  .floating-timer {
+    bottom: 16px;
+    right: 16px;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .timer-container {
+    padding: 1.8rem 2rem;
+  }
+  h1 { font-size: 1.9rem; }
+  .timer { font-size: 4.8rem; letter-spacing: 4px; }
+  .mode { font-size: 1.1rem; }
+  .progress { font-size: 0.95rem; }
+  .controls button { padding: 0.7rem 1.4rem; font-size: 0.95rem; }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .timer-container { padding: 1.8rem 3rem; }
+  .timer { font-size: 5rem; }
+  h1 { font-size: 2rem; }
+}

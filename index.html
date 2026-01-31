@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pomodoro Timer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="app-wrapper">
+
+    <!-- Toggle button (top-right) -->
+    <button class="toggle-timer-btn" id="toggleTimer">
+      <span class="show-text">Hide Timer</span>
+      <span class="hide-text" style="display: none;">Show Timer</span>
+    </button>
+
+    <!-- Main timer container -->
+    <div class="timer-container" id="timerContainer">
+      <h1>Pomodoro Timer</h1>
+
+      <div class="mode">Work Time</div>
+      
+      <div class="timer">25:00</div>
+
+      <div class="progress">
+        Sessions completed: <span id="sessions">0</span>/4
+      </div>
+
+      <div class="controls">
+        <button id="start">Start</button>
+        <button id="pause">Pause</button>
+        <button id="reset">Reset</button>
+      </div>
+    </div>
+
+    <!-- Floating mini timer (appears when main is hidden) -->
+    <div class="floating-timer" id="floatingTimer">
+      <span id="floatingTime">25:00</span>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
